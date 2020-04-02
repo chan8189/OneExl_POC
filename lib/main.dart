@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutterapp/homeScreen.dart';
+
+import 'package:flutterapp/loginScreen.dart';
 
 
 
@@ -9,7 +10,7 @@ void main(){
   runApp(new MaterialApp(
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
-      '/HomeScreen': (BuildContext context) => new HomeScreen()
+      '/HomeScreen': (BuildContext context) => new loginScreen()
     },
   ));
 }
