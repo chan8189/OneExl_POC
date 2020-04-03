@@ -13,7 +13,7 @@ class loginScreen extends StatefulWidget {
 
 class _loginScreenState extends State<loginScreen> {
   bool _isLoading = false;
-
+  String _grantType ="password";
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
@@ -42,11 +42,11 @@ class _loginScreenState extends State<loginScreen> {
     try {
       SharedPreferences sharedPreferences = await SharedPreferences
           .getInstance();
-      Map data = {'email': email, 'password': pass, 'grant_type': "password"};
+      Map data = {'username': email, 'password': pass, 'grant_type': _grantType};
       var jsonResponse = null;
       // var response = await http.post("https://exlmobility-uat.exlservice.com/ONEEXL/token", body: data);
       var response = await http.post(
-          Uri.encodeFull("https://exlmobility-uat.exlservice.com/ONEEXL/token"),
+          Uri.encodeFull("https://exlmobility.exlservice.com/ONEEXL/token"),
           headers: {"Content-Type": "application/x-www-form-urlencoded"},body: data);
       print(response.body);
       if (response.statusCode == 200) {
