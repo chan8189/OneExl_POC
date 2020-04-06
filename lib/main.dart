@@ -3,11 +3,13 @@ import 'dart:async';
 
 
 import 'package:flutterapp/loginScreen.dart';
+import 'package:flutterapp/updatedLoginScreen.dart';
 
 
 
 void main(){
   runApp(new MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/HomeScreen': (BuildContext context) => new loginScreen()
