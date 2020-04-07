@@ -3,7 +3,6 @@ import 'dart:async';
 
 
 import 'package:flutterapp/loginScreen.dart';
-import 'package:flutterapp/updatedLoginScreen.dart';
 
 
 
