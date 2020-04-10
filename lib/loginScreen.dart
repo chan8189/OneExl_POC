@@ -31,13 +31,12 @@ class _loginScreenState extends State<loginScreen> {
     _fetchSessionAndNavigate();
     _emailController = new TextEditingController();
     _passwordController = new TextEditingController();
-
   }
 
   _fetchSessionAndNavigate() async {
     _sharedPreferences = await _prefs;
     String authToken = AuthUtils.getToken(_sharedPreferences);
-    if(authToken != null) {
+    if (authToken != null) {
       Navigator.of(_scaffoldKey.currentContext)
           .pushReplacementNamed(HomeScreen.routeName);
     }
@@ -81,27 +80,19 @@ class _loginScreenState extends State<loginScreen> {
 
   _authenticateUser() async {
     _showLoading();
-    if(_valid()) {
+    if (_valid()) {
       var responseJson = await NetworkUtils.authenticateUser(
-          _emailController.text, _passwordController.text
-      );
+          _emailController.text, _passwordController.text);
 
       print(responseJson);
 
-      if(responseJson == null) {
-
+      if (responseJson == null) {
         NetworkUtils.showSnackBar(_scaffoldKey, 'Something went wrong!');
-
-      } else if(responseJson == 'NetworkError') {
-
+      } else if (responseJson == 'NetworkError') {
         NetworkUtils.showSnackBar(_scaffoldKey, null);
-
-      } else if(responseJson['errors'] != null) {
-
+      } else if (responseJson['errors'] != null) {
         NetworkUtils.showSnackBar(_scaffoldKey, 'Invalid Email/Password');
-
       } else {
-
         AuthUtils.insertDetails(_sharedPreferences, responseJson);
         /**
          * Removes stack and start with the new page.
@@ -109,7 +100,6 @@ class _loginScreenState extends State<loginScreen> {
          * **/
         Navigator.of(_scaffoldKey.currentContext)
             .pushReplacementNamed(HomeScreen.routeName);
-
       }
       _hideLoading();
     } else {
@@ -124,23 +114,21 @@ class _loginScreenState extends State<loginScreen> {
   _valid() {
     bool valid = true;
 
-    if(_emailController.text.isEmpty) {
+    if (_emailController.text.isEmpty) {
       valid = false;
       _emailError = "Email can't be blank!";
     }
 
-    if(_passwordController.text.isEmpty) {
+    if (_passwordController.text.isEmpty) {
       valid = false;
       _passwordError = "Password can't be blank!";
-    } else if(_passwordController.text.length < 6) {
+    } else if (_passwordController.text.length < 6) {
       valid = false;
       _passwordError = "Password is invalid!";
     }
 
     return valid;
   }
-
-
 
   signIn(String email, pass) async {
     try {
@@ -201,7 +189,7 @@ class _loginScreenState extends State<loginScreen> {
       width: MediaQuery.of(context).size.width,
       height: 40.0,
       padding: EdgeInsets.symmetric(horizontal: 15.0),
-     // margin: EdgeInsets.only(top: 1.0),
+      // margin: EdgeInsets.only(top: 1.0),
       child: RaisedButton(
         onPressed: emailController.text == "" || passwordController.text == ""
             ? null

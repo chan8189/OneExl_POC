@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/dashboardScreen.dart';
 import 'dart:async';
+import 'package:flutterapp/tab_container.dart';
 
 
 import 'package:flutterapp/loginScreen.dart';
@@ -11,7 +13,7 @@ void main(){
     debugShowCheckedModeBanner: false,
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
-      '/HomeScreen': (BuildContext context) => new loginScreen()
+      '/HomeScreen': (BuildContext context) => new TabContainer()
     },
   ));
 }
