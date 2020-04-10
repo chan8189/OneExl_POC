@@ -17,6 +17,9 @@ class _IssuesState extends State<Issues> with AutomaticKeepAliveClientMixin<Issu
     return Scaffold(
       appBar: AppBar(
         title: Text('Report Issue'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
+        ],
       ),
       body: Center(
         child: Text(

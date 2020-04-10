@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
 
-class Apps extends StatefulWidget {
+class Feedback1 extends StatefulWidget {
   @override
-  _AppsState createState() => _AppsState();
+  _Feedback1State createState() => _Feedback1State();
 }
 
-class _AppsState extends State<Apps> with AutomaticKeepAliveClientMixin<Apps>{
-
-  @override
-  void initState() {
-    super.initState();
-    print('initState Tab1');
-  }
+class _Feedback1State extends State<Feedback1> with AutomaticKeepAliveClientMixin<Feedback1>{
   @override
   Widget build(BuildContext context) {
-    print('build Tab1');
+    print('build About Us');
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Apps'),
+        title: Text('Feedback'),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
         ],
       ),
       body: Center(
         child: Text(
-          'This is content of Tab1',
+          'Feedback',
           style: TextStyle(fontSize: 30),
         ),
       ),

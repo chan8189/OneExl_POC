@@ -17,6 +17,9 @@ class _StoreState extends State<Store> with AutomaticKeepAliveClientMixin<Store>
     return Scaffold(
       appBar: AppBar(
         title: Text('Exl Store'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
+        ],
       ),
       body: Center(
         child: Text(
