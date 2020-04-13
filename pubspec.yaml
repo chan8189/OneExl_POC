@@ -12,6 +12,7 @@ dependencies:
   http: any
   shared_preferences: any
   cupertino_icons: ^0.1.2
+  flutter_rating_bar: ^3.0.1+1
 
 
 dev_dependencies:
@@ -34,6 +35,8 @@ flutter:
   assets:
     - images/splash_screen.png
     - images/logo.png
+    - images/evoayge_app_icon.png
+    - images/pss_app_icon.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -5,7 +5,7 @@ import 'package:flutterapp/tab_container.dart';
 
 
 import 'package:flutterapp/loginScreen.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 
 void main(){
