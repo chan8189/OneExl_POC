@@ -73,18 +73,18 @@ class _Feedback1State extends State<Feedback1>
         title: Text('Feedback'),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
-          IconButton(
-            icon: Icon(Icons.settings),
-            color: Colors.white,
-            onPressed: () async {
-              _selectedIcon = await showDialog<IconData>(
-                context: context,
-                builder: (context) => IconAlert(),
-              );
-              _ratingBarMode = 1;
-              setState(() {});
-            },
-          ),
+//          IconButton(
+//            icon: Icon(Icons.settings),
+//            color: Colors.white,
+//            onPressed: () async {
+//              _selectedIcon = await showDialog<IconData>(
+//                context: context,
+//                builder: (context) => IconAlert(),
+//              );
+//              _ratingBarMode = 1;
+//              setState(() {});
+//            },
+//          ),
         ],
       ),
       body: Column(
