@@ -255,7 +255,7 @@ class _Feedback1State extends State<Feedback1>
   @override
   bool get wantKeepAlive => true;
 }
-
+/*
 class IconAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -295,5 +295,5 @@ class IconAlert extends StatelessWidget {
         onPressed: () => Navigator.pop(context, icon),
         splashColor: Colors.amberAccent,
         color: Colors.amber,
-      );
-}
+      );*/
+
