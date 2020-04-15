@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screens/feedback.dart';
 import 'package:flutterapp/screens/about.dart';
+import 'package:flutterapp/screens/feedback.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../loginScreen.dart';
 
 class Others extends StatefulWidget {
   @override
@@ -71,8 +73,15 @@ Widget _myListView(BuildContext context) {
       ListTile(
         leading: Icon(Icons.exit_to_app),
         title: Text('Sign Out'),
-        onTap: () {
+        onTap: () async {
           print('Sign Out');
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          sharedPreferences.remove("token");
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (BuildContext context) => loginScreen()),
+              (Route<dynamic> route) => false);
         },
       ),
     ],

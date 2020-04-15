@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/screens/updatedAppsDetail.dart';
 
 class Apps extends StatefulWidget {
   @override
@@ -22,37 +23,90 @@ class _AppsState extends State<Apps> with AutomaticKeepAliveClientMixin<Apps> {
           IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
         ],
       ),
-      body: new Container(
-        child: new Stack(
-          children: <Widget>[
-            headerSection(),
-
-            Container(
-                margin: EdgeInsets.only(top: 50.0),
-                child: new ListView.builder(
-                    itemCount: 15,
-                    itemBuilder: (BuildContext context, int index) {
-                      return new Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          leftSection(),
-                          middleSection(),
-                          SizedBox(
-                            width: 108,
-                          ),
-                          rightSection()
-                        ],
-                      );
-                    }))
-          ],
-        ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Column(
+                children: <Widget>[
+                  _buildListRow1(),
+                  _buildListRow2(),
+                ],
+              )
+            ]),
+          )
+        ],
       ),
+    );
+  }
+
+  Widget _buildListRow1() {
+    return Stack(
+      children: <Widget>[
+        headerSection(),
+        Container(
+            margin: EdgeInsets.only(top: 70.0),
+            child: new ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: 2,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AppDetail()),
+                      );
+                    },
+                    child: Card(
+                        child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        leftSection(),
+                        middleSection(),
+                        SizedBox(
+                          width: 108,
+                        ),
+                        rightSection()
+                      ],
+                    )),
+                  );
+                }))
+      ],
+    );
+  }
+
+  Widget _buildListRow2() {
+    return Stack(
+      children: <Widget>[
+        headerSection2(),
+        Container(
+            margin: EdgeInsets.only(top: 50.0),
+            child: new ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                      child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      leftSection(),
+                      middleSection(),
+                      SizedBox(
+                        width: 108,
+                      ),
+                      rightSection()
+                    ],
+                  ));
+                }))
+      ],
     );
   }
 
   Container leftSection() {
     return Container(
-       // margin: EdgeInsets.only(top: 50.0),
+        // margin: EdgeInsets.only(top: 50.0),
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         child: CircleAvatar(
           backgroundColor: Colors.transparent,
@@ -86,7 +140,7 @@ class _AppsState extends State<Apps> with AutomaticKeepAliveClientMixin<Apps> {
 
   Container rightSection() {
     return Container(
-     // margin: EdgeInsets.only(top: 50.0),
+      // margin: EdgeInsets.only(top: 50.0),
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       child: new RaisedButton(
         elevation: 0.0,
@@ -104,7 +158,7 @@ class _AppsState extends State<Apps> with AutomaticKeepAliveClientMixin<Apps> {
 
   Container headerSection() {
     return Container(
-        margin: EdgeInsets.fromLTRB(15, 10, 0.0, 0.0),
+        margin: EdgeInsets.fromLTRB(15, 20, 0.0, 0.0),
         //padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,6 +200,30 @@ class _AppsState extends State<Apps> with AutomaticKeepAliveClientMixin<Apps> {
               onPressed: () {},
               color: Colors.deepOrange[400],
               textColor: Colors.white,
+            ),
+          ],
+        ));
+  }
+
+  Container headerSection2() {
+    return Container(
+        margin: EdgeInsets.fromLTRB(15, 10, 0.0, 0.0),
+        //padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(0.0, 15, 0.0, 0.0),
+              child: new Text(
+                "Updated Apps",
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                  wordSpacing: 2.0,
+                  fontSize: 16.0,
+                ),
+              ),
             ),
           ],
         ));
