@@ -31,7 +31,7 @@ class _StoreState extends State<Store>
               Column(
                 children: <Widget>[
                   _buildListRow1(),
-                  //_buildListRow2(),
+                  _buildListRow2(),
                 ],
               )
             ]),
@@ -46,11 +46,12 @@ class _StoreState extends State<Store>
       children: <Widget>[
         headerSection(),
         Container(
-            margin: EdgeInsets.only(top: 70.0),
+            margin: EdgeInsets.fromLTRB(15, 70, 0.0, 0.0),
+            height: 100.0,
             child: new ListView.builder(
-                scrollDirection: Axis.vertical,
+                scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: 2,
+                itemCount: 12,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
@@ -59,100 +60,141 @@ class _StoreState extends State<Store>
                         MaterialPageRoute(builder: (context) => AppDetail()),
                       );
                     },
-                    child: Row(
+                    child: Card(
+                        child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        appSection(),
+                        leftSection(),
+//                            middleSection(),
+//                            SizedBox(
+//                              width: 108,
+//                            ),
+//                            rightSection()
                       ],
-                    ),
+                    )),
                   );
                 }))
       ],
     );
+  }
+
+  Widget _buildListRow2() {
+    return Stack(
+      children: <Widget>[
+        headerSection2(),
+        Container(
+            margin: EdgeInsets.fromLTRB(15, 70, 0.0, 0.0),
+            height: 100.0,
+            child: new ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: 2,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                      child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      leftSection(),
+//                          middleSection(),
+//                          SizedBox(
+//                            width: 108,
+//                          ),
+//                          rightSection()
+                    ],
+                  ));
+                }))
+      ],
+    );
+  }
+
+  Container leftSection() {
+    return Container(
+        // margin: EdgeInsets.only(top: 50.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: 30.0,
+          child: Image.asset('images/evoayge_app_icon.png'),
+        ));
+  }
+
+
+  Container headerSection() {
+    return Container(
+        margin: EdgeInsets.fromLTRB(15, 20, 0.0, 0.0),
+        //padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(0.0, 15, 0.0, 0.0),
+              child: new Text(
+                "Global Technology",
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                  wordSpacing: 2.0,
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(5, 15, 0.0, 0.0),
+              child: new CircleAvatar(
+                backgroundColor: Colors.lightBlue,
+                radius: 10.0,
+                child: new Text(
+                  ">",
+                  style: new TextStyle(color: Colors.white, fontSize: 12.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 100,
+            ),
+          ],
+        ));
+  }
+
+  Container headerSection2() {
+    return Container(
+        margin: EdgeInsets.fromLTRB(15, 20, 0.0, 0.0),
+        //padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(0.0, 15, 0.0, 0.0),
+              child: new Text(
+                "L.I.F.E",
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                  wordSpacing: 2.0,
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(5, 15, 0.0, 0.0),
+              child: new CircleAvatar(
+                backgroundColor: Colors.lightBlue,
+                radius: 10.0,
+                child: new Text(
+                  ">",
+                  style: new TextStyle(color: Colors.white, fontSize: 12.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 100,
+            ),
+          ],
+        ));
   }
 
   @override
   bool get wantKeepAlive => true;
-
-  Widget appSection() {
-    return Stack(
-      children: <Widget>[
-        headerSection(),
-        Container(
-            margin: EdgeInsets.only(top: 70.0),
-            child: new ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: 3,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AppDetail()),
-                      );
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        bodySection(),
-                      ],
-                    ),
-                  );
-                }))
-      ],
-    );
-  }
-
-  Container headerSection() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(15, 10, 0.0, 0.0),
-      width: 120.0,
-      height: 30.0,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.fromLTRB(0.0, 15, 0.0, 0.0),
-            child: new Text(
-              "Update Pending",
-              style: TextStyle(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.0,
-                wordSpacing: 2.0,
-                fontSize: 16.0,
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(5, 15, 0.0, 0.0),
-            child: new CircleAvatar(
-              backgroundColor: Colors.lightGreen,
-              radius: 10.0,
-              child: new Text(
-                ">",
-                style: new TextStyle(color: Colors.white, fontSize: 12.0),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container bodySection() {
-    Container(
-      margin: EdgeInsets.fromLTRB(10, 10, 0.0, 0.0),
-      height: 120.0,
-      width: 120.0,
-      decoration: new BoxDecoration(
-        image: DecorationImage(
-          image: new AssetImage('images/evoayge_app_icon.png'),
-          fit: BoxFit.fill,
-        ),
-        shape: BoxShape.rectangle,
-      ),
-    );
-  }
 }
