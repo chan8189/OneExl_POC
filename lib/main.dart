@@ -1,19 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutterapp/dashboardScreen.dart';
 import 'dart:async';
-import 'package:flutterapp/tab_container.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutterapp/screens/test.dart';
 
-import 'package:flutterapp/loginScreen.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
-
-void main(){
+void main() {
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
-      '/HomeScreen': (BuildContext context) => new TabContainer()
+      '/HomeScreen': (BuildContext context) => new mPinTest()
     },
   ));
 }
@@ -32,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigationPage() {
     Navigator.of(context).pushReplacementNamed('/HomeScreen');
   }
+
   @override
   void initState() {
     // TODO: implement initState
