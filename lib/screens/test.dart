@@ -3,8 +3,6 @@ library pin_entry_text_field;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../tab_container.dart';
-
 class mPinTest extends StatefulWidget {
   final String lastPin;
   final int fields;
@@ -30,7 +28,6 @@ class mPinTest extends StatefulWidget {
 
 class _mPinTestState extends State<mPinTest> {
   List<String> _pin;
-  List<String> _storePin;
   List<FocusNode> _focusNodes;
   List<TextEditingController> _textControllers;
 
@@ -40,13 +37,11 @@ class _mPinTestState extends State<mPinTest> {
   void initState() {
     super.initState();
     _pin = List<String>(widget.fields);
-    //_storePin = List<String>(widget.fields);
-    _storePin = ['1', '2', '3', '4'];
-
     _focusNodes = List<FocusNode>(widget.fields);
     _textControllers = List<TextEditingController>(widget.fields);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
+        //first function call
         if (widget.lastPin != null) {
           for (var i = 0; i < widget.lastPin.length; i++) {
             _pin[i] = widget.lastPin[i];
@@ -112,13 +107,17 @@ class _mPinTestState extends State<mPinTest> {
         _textControllers[i].text = widget.lastPin[i];
       }
     }
+    Color _getContainerBackgroundColor() {
+      return _focusNodes[i].hasFocus ? Colors.red : Colors.blue;
+    }
 
     _focusNodes[i].addListener(() {
-      if (_focusNodes[i].hasFocus) {}
+      if (_focusNodes[i].hasFocus) {
+        print("Has focus: ${_focusNodes[i].hasFocus}");
+      }
     });
 
     final String lastDigit = _textControllers[i].text;
-    // print(lastDigit);
     return Container(
       width: widget.fieldWidth,
       margin: EdgeInsets.only(right: 10.0),
@@ -142,6 +141,7 @@ class _mPinTestState extends State<mPinTest> {
         onChanged: (String str) {
           setState(() {
             _pin[i] = str;
+
             //      _storePin[i] = str;
           });
           if (i + 1 != widget.fields) {
@@ -157,18 +157,18 @@ class _mPinTestState extends State<mPinTest> {
               FocusScope.of(context).requestFocus(_focusNodes[i - 1]);
             }
           }
+          //on last click this function call
           if (_pin.every((String digit) => digit != null && digit != '')) {
             // print(str);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TabContainer()),
-            );
+//            Navigator.push(
+//              context,
+//              MaterialPageRoute(builder: (context) => TabContainer()),
+//            );
             widget.onSubmit(_pin.join());
           }
         },
         onSubmitted: (String str) {
           if (_pin.every((String digit) => digit != null && digit != '')) {
-            print(str);
             widget.onSubmit(_pin.join());
           }
         },

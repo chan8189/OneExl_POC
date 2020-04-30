@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 class mPin extends StatefulWidget {
+  bool pressed = true;
   @override
   _mPinState createState() => _mPinState();
 }
 
 class _mPinState extends State<mPin> {
   List<RadioModel> sampleData = new List<RadioModel>();
+
+  bool pressed = false;
 
   @override
   void initState() {
@@ -36,26 +39,17 @@ class _mPinState extends State<mPin> {
                 child: new Container(
                   height: double.infinity,
                   width: double.infinity,
-                  margin: EdgeInsets.fromLTRB(35, 70, 0.0, 0.0),
                   color: Colors.black,
-                  child: new ListView.builder(
-                    itemCount: sampleData.length,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return new InkWell(
-                        //highlightColor: Colors.red,
-                        splashColor: Colors.blueAccent,
-                        onTap: () {
-                          setState(() {
-                            sampleData.forEach(
-                                (element) => element.isSelected = false);
-                            sampleData[index].isSelected = true;
-                          });
-                        },
-                        child: new RadioItem(sampleData[index]),
-                      );
-                    },
+                  margin: EdgeInsets.fromLTRB(35, 70, 0.0, 0.0),
+                  child: new Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Flexible(flex: 1, child: firstBox()),
+                      Flexible(flex: 1, child: secondBox()),
+                      Flexible(flex: 1, child: thirdBox()),
+                      Flexible(flex: 1, child: forthBox()),
+                      //Flexible(flex: 1, child: CustomButton("-"))
+                    ],
                   ),
                 ),
               ),
@@ -68,22 +62,6 @@ class _mPinState extends State<mPin> {
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-//                      Flexible(
-//                        flex: 1,
-//                        child: new Container(
-//                          height: double.infinity,
-//                          width: double.infinity,
-//                          child: new Row(
-//                            crossAxisAlignment: CrossAxisAlignment.start,
-//                            children: <Widget>[
-//                              Flexible(flex: 1, child: CustomButton("C")),
-//                              Flexible(flex: 1, child: CustomButton("+/-")),
-//                              Flexible(flex: 1, child: CustomButton("%")),
-//                              Flexible(flex: 1, child: CustomButton("\u00F7"))
-//                            ],
-//                          ),
-//                        ),
-//                      ),
                       Flexible(
                         flex: 1,
                         child: new Container(
@@ -92,7 +70,14 @@ class _mPinState extends State<mPin> {
                           child: new Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Flexible(flex: 1, child: CustomButton("1")),
+                              Flexible(
+                                  flex: 1,
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        //showBoxes(isPressed);
+                                        print("onTap called.");
+                                      },
+                                      child: CustomButton("1"))),
                               Flexible(flex: 1, child: CustomButton("2")),
                               Flexible(flex: 1, child: CustomButton("3")),
                               //Flexible(flex: 1, child: CustomButton("X"))
@@ -196,6 +181,87 @@ class CustomButton extends StatelessWidget {
       ),
     );
   }
+}
+
+Container firstBox() {
+  return Container(
+    //color:  ? Colors.blue : Colors.grey,
+    // margin: EdgeInsets.only(top: 50.0),
+    decoration: new BoxDecoration(
+      shape: BoxShape.rectangle,
+      border: new Border.all(
+        color: Colors.white,
+        width: 1.0,
+      ),
+    ),
+    child: new TextField(
+      textAlign: TextAlign.center,
+      decoration: new InputDecoration(
+        hintText: '1',
+        border: InputBorder.none,
+      ),
+    ),
+  );
+}
+
+Container secondBox() {
+  return Container(
+    // margin: EdgeInsets.only(top: 50.0),
+    decoration: new BoxDecoration(
+      shape: BoxShape.rectangle,
+      border: new Border.all(
+        color: Colors.white,
+        width: 1.0,
+      ),
+    ),
+    child: new TextField(
+      textAlign: TextAlign.center,
+      decoration: new InputDecoration(
+        hintText: '1',
+        border: InputBorder.none,
+      ),
+    ),
+  );
+}
+
+Container thirdBox() {
+  return Container(
+    // margin: EdgeInsets.only(top: 50.0),
+    decoration: new BoxDecoration(
+      shape: BoxShape.rectangle,
+      border: new Border.all(
+        color: Colors.white,
+        width: 1.0,
+      ),
+    ),
+    child: new TextField(
+      textAlign: TextAlign.center,
+      decoration: new InputDecoration(
+        hintText: '1',
+        border: InputBorder.none,
+      ),
+    ),
+  );
+}
+
+Container forthBox() {
+  return Container(
+    // margin: EdgeInsets.only(top: 50.0),
+    decoration: new BoxDecoration(
+      shape: BoxShape.rectangle,
+      border: new Border.all(
+        color: Colors.white,
+        width: 1.0,
+      ),
+    ),
+    child: new TextField(
+      textAlign: TextAlign.center,
+      decoration: new InputDecoration(
+        hintText: '1',
+        border: InputBorder.none,
+      ),
+    ),
+  );
 }
 
 class RadioItem extends StatelessWidget {

@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screens/pinCode.dart';
+import 'package:flutterapp/tab_container.dart';
 
 void main() {
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
-      '/HomeScreen': (BuildContext context) => new PinCodeVerificationScreen()
+      '/HomeScreen': (BuildContext context) => new TabContainer()
     },
   ));
 }
