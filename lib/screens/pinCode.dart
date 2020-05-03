@@ -4,7 +4,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../tab_container.dart';
+
 class PinCodeVerificationScreen extends StatefulWidget {
+  static final String routeName = 'mpin';
   @override
   _PinCodeVerificationScreenState createState() =>
       _PinCodeVerificationScreenState();
@@ -14,6 +17,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   var onTapRecognizer;
 
   TextEditingController textEditingController = TextEditingController();
+
   //  ..text = "098765";
   StreamController<ErrorAnimationType> errorController;
   bool hasError = false;
@@ -155,7 +159,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                   child: FlatButton(
                     onPressed: () {
                       // conditions for validating
-                      if (currentText.length != 6 || currentText != "towtow") {
+                      if (currentText.length != 6 || currentText != "123456") {
                         errorController.add(ErrorAnimationType
                             .shake); // Triggering error shake animation
                         setState(() {
@@ -164,10 +168,14 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       } else {
                         setState(() {
                           hasError = false;
-                          scaffoldKey.currentState.showSnackBar(SnackBar(
-                            content: Text("Wait!!"),
-                            duration: Duration(seconds: 2),
-                          ));
+//                          scaffoldKey.currentState.showSnackBar(SnackBar(
+//                            content: Text("Wait!!"),
+//                            duration: Duration(seconds: 2),
+//                          ));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return TabContainer();
+                          }));
                         });
                       }
                     },

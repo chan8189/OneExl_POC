@@ -3,12 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterapp/homeScreen.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutterapp/screens/pinCode.dart';
+import 'package:flutterapp/tab_container.dart';
 import 'package:flutterapp/utils/auth_utils.dart';
 import 'package:flutterapp/utils/network_utils.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class loginScreen extends StatefulWidget {
+  static final String routeName = 'login';
+
   @override
   _loginScreenState createState() => _loginScreenState();
 }
@@ -37,8 +41,11 @@ class _loginScreenState extends State<loginScreen> {
     _sharedPreferences = await _prefs;
     String authToken = AuthUtils.getToken(_sharedPreferences);
     if (authToken != null) {
-      Navigator.of(_scaffoldKey.currentContext)
-          .pushReplacementNamed(HomeScreen.routeName);
+//      Navigator.of(_scaffoldKey.currentContext)
+//          .pushReplacementNamed(HomeScreen.routeName);
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return PinCodeVerificationScreen();
+      }));
     }
   }
 
@@ -130,19 +137,19 @@ class _loginScreenState extends State<loginScreen> {
     return valid;
   }
 
-  signIn(String email, pass) async {
+  signIn(String username, pass) async {
     try {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       Map data = {
-        'username': email,
+        'username': username,
         'password': pass,
         'grant_type': _grantType
       };
       var jsonResponse = null;
       // var response = await http.post("https://exlmobility-uat.exlservice.com/ONEEXL/token", body: data);
       var response = await http.post(
-          Uri.encodeFull("https://exlmobility.exlservice.com/ONEEXL/token"),
+          Uri.encodeFull("https://exlmobility-uat.exlservice.com/ONEEXL/token"),
           headers: {"Content-Type": "application/x-www-form-urlencoded"},
           body: data);
       print(response.body);
@@ -155,7 +162,7 @@ class _loginScreenState extends State<loginScreen> {
           sharedPreferences.setString("token", jsonResponse['token']);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                  builder: (BuildContext context) => HomeScreen()),
+                  builder: (BuildContext context) => TabContainer()),
               (Route<dynamic> route) => false);
         }
       } else {

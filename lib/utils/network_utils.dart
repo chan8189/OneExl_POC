@@ -1,7 +1,9 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'auth_utils.dart';
 
 class NetworkUtils {
@@ -12,12 +14,12 @@ class NetworkUtils {
       'https://exlmobility-uat.exlservice.com/ONEEXL/token';
   static final String _grantType = "password";
 
-  static dynamic authenticateUser(String email, String password) async {
+  static dynamic authenticateUser(String username, String password) async {
     var uri = developmentHost;
 
     try {
       Map data = {
-        'username': email,
+        'username': username,
         'password': password,
         'grant_type': _grantType
       };
@@ -26,7 +28,7 @@ class NetworkUtils {
 //          body: data);
       //var jsonResponse = null;
       var response = await http.post(
-          Uri.encodeFull("https://exlmobility.exlservice.com/ONEEXL/token"),
+          Uri.encodeFull("https://exlmobility-uat.exlservice.com/ONEEXL/token"),
           headers: {"Content-Type": "application/x-www-form-urlencoded"},
           body: data);
 
