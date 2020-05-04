@@ -11,8 +11,9 @@ class NetworkUtils {
   static final String productionHost =
       'https://exlmobility.exlservice.com/ONEEXL/token';
   static final String developmentHost =
-      'https://exlmobility-uat.exlservice.com/ONEEXL/token';
+      'https://exlmobility-uat.exlservice.com/ONEEXL/';
   static final String _grantType = "password";
+  static final String _osType = "ANDROID";
 
   static dynamic authenticateUser(String username, String password) async {
     var uri = developmentHost;
@@ -47,8 +48,8 @@ class NetworkUtils {
 
   static logoutUser(BuildContext context, SharedPreferences prefs) {
     prefs.setString(AuthUtils.authTokenKey, null);
-    prefs.setInt(AuthUtils.userIdKey, null);
-    prefs.setString(AuthUtils.nameKey, null);
+    prefs.setInt(AuthUtils.employeddIdKey, null);
+    prefs.setString(AuthUtils.userNameKey, null);
     Navigator.of(context).pushReplacementNamed('/');
   }
 
@@ -58,16 +59,37 @@ class NetworkUtils {
     ));
   }
 
-  static fetch(var authToken, var endPoint) async {
-    var uri = host + endPoint;
-
+  static fetch(
+      var authToken, var endPoint, empId, userName, employeeType) async {
+    var uri = developmentHost + endPoint;
+//    Map data = {
+//      'empId': empId,
+//      'userName': userName,
+//      'employeeType': employeeType,
+//      'osType': _osType
+//    };
+    final msg = jsonEncode({
+      "EMPLOYEE_ID": empId,
+      "USERNAME": userName,
+      "OS_TYPE": _osType,
+      "EMPLOYEE_TYPE": employeeType
+    });
+//    final msg1 = jsonEncode({
+//      "USERNAME": "Chandan144843",
+//      "EMPLOYEE_ID": "144843",
+//      "OS_TYPE": "ANDROID",
+//      "EMPLOYEE_TYPE": "Employee"
+//    });
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $authToken'
+    };
     try {
-      final response = await http.get(
-        uri,
-        headers: {'Authorization': authToken},
-      );
+      final response = await http.post(uri, headers: headers, body: msg);
 
       final responseJson = json.decode(response.body);
+      print(response.body);
       return responseJson;
     } catch (exception) {
       print(exception);

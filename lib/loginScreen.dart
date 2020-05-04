@@ -159,7 +159,14 @@ class _loginScreenState extends State<loginScreen> {
           setState(() {
             _isLoading = false;
           });
-          sharedPreferences.setString("token", jsonResponse['token']);
+          sharedPreferences.setString("token", jsonResponse['access_token']);
+          sharedPreferences.setString("userNameKey", jsonResponse['USERNAME']);
+          sharedPreferences.setString(
+              "employeddIdKey", jsonResponse['EMPLOYEE_ID']);
+          sharedPreferences.setString(
+              "employeddTypeKey", jsonResponse['EMPLOYEE_TYPE']);
+          // print(jsonResponse['access_token']);
+          // AuthUtils.insertDetails(_sharedPreferences, response.body);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (BuildContext context) => TabContainer()),

@@ -3,6 +3,8 @@ import 'package:flutterapp/screens/tab1.dart';
 import 'package:flutterapp/screens/tab2.dart';
 import 'package:flutterapp/screens/tab3.dart';
 import 'package:flutterapp/screens/tab4.dart';
+import 'package:flutterapp/utils/network_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TabContainer extends StatefulWidget {
   TabContainer({Key key}) : super(key: key);
@@ -20,15 +22,77 @@ class _TabContainerState extends State<TabContainer> {
   int tabIndex = 0;
   Color tabColor = Colors.white;
   Color selectedTabColor = Colors.amber;
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  SharedPreferences _sharedPreferences;
+  var _authToken, _empId, _userName, _employeeType, _osType, _homeResponse;
 
   @override
   void initState() {
     super.initState();
+    _fetchSessionAndNavigate();
 
     originalList = [Apps(), Store(), Issues(), Others()];
     originalDic = {0: true, 1: false, 2: false, 3: false};
     listScreens = [originalList.first];
     listScreensIndex = [0];
+  }
+
+  _fetchSessionAndNavigate() async {
+    _sharedPreferences = await _prefs;
+    //String authToken = AuthUtils.getToken(_sharedPreferences);
+    String authToken = _sharedPreferences.get("token");
+    var id = _sharedPreferences.get("employeddIdKey");
+    var name = _sharedPreferences.get("userNameKey");
+    var employeeType = _sharedPreferences.get("employeddTypeKey");
+
+    print(authToken);
+
+    _fetchHome(authToken, id, name, employeeType);
+
+    setState(() {
+      _authToken = authToken;
+      _empId = id;
+      _userName = name;
+      _employeeType = employeeType;
+      _osType = "ANDROID";
+    });
+
+    if (_authToken == null) {
+      _logout();
+    }
+  }
+
+  _fetchHome(String authToken, id, name, employeeType) async {
+    setState(() {
+      _empId = id;
+      _userName = name;
+      _employeeType = employeeType;
+      //_osType = "ANDROID";
+    });
+    var responseJson = await NetworkUtils.fetch(
+        authToken,
+        'api/OneExlApp/GETCATEGORYWISEAPPLIST',
+        _empId,
+        _userName,
+        _employeeType);
+
+    if (responseJson == null) {
+      // NetworkUtils.showSnackBar(_scaffoldKey, 'Something went wrong!');
+    } else if (responseJson == 'NetworkError') {
+      //NetworkUtils.showSnackBar(_scaffoldKey, null);
+    } else if (responseJson['errors'] != null) {
+      _logout();
+    }
+
+    setState(() {
+      _homeResponse = responseJson.toString();
+      print(_homeResponse);
+    });
+  }
+
+  _logout() {
+    NetworkUtils.logoutUser(_scaffoldKey.currentContext, _sharedPreferences);
   }
 
   @override
