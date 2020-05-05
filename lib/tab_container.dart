@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutterapp/screens/tab1.dart';
 import 'package:flutterapp/screens/tab2.dart';
@@ -5,6 +7,8 @@ import 'package:flutterapp/screens/tab3.dart';
 import 'package:flutterapp/screens/tab4.dart';
 import 'package:flutterapp/utils/network_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'listAppsDetailModel.dart';
 
 class TabContainer extends StatefulWidget {
   TabContainer({Key key}) : super(key: key);
@@ -77,6 +81,14 @@ class _TabContainerState extends State<TabContainer> {
         _userName,
         _employeeType);
 
+//    final Map parsed = json.decode(responseJson);
+
+    //assuming this json returns an array of signupresponse objects
+    final List parsedList = json.decode(responseJson);
+
+    List<listAppsDetailModel> list =
+        parsedList.map((val) => listAppsDetailModel.fromJson(val)).toList();
+
     if (responseJson == null) {
       // NetworkUtils.showSnackBar(_scaffoldKey, 'Something went wrong!');
     } else if (responseJson == 'NetworkError') {
@@ -87,6 +99,7 @@ class _TabContainerState extends State<TabContainer> {
 
     setState(() {
       _homeResponse = responseJson.toString();
+
       print(_homeResponse);
     });
   }

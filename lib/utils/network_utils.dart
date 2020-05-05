@@ -90,7 +90,9 @@ class NetworkUtils {
 
       final responseJson = json.decode(response.body);
       print(response.body);
+
       return responseJson;
+
     } catch (exception) {
       print(exception);
       if (exception.toString().contains('SocketException')) {
