@@ -17,6 +17,7 @@ dependencies:
   pin_code_fields: ^2.5.1
   flare_flutter: ^2.0.3
   flutter_appavailability: ^0.0.21
+  fluro: ^1.2.1
 
 
 dev_dependencies:
