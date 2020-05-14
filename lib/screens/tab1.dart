@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutterapp/listAppsDetailModel.dart';
+import 'package:flutter_appavailability/flutter_appavailability.dart';
+import 'package:flutterapp/models/AppListResponse.dart';
 import 'package:flutterapp/screens/updatedAppsDetail.dart';
 import 'package:flutterapp/utils/network_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +14,17 @@ class _AppsState extends State<Apps> with AutomaticKeepAliveClientMixin<Apps> {
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   SharedPreferences _sharedPreferences;
-  var _authToken, _empId, _userName, _employeeType, _osType, _homeResponse;
+  var _authToken,
+      _empId,
+      _userName,
+      _employeeType,
+      _osType,
+      _homeResponse,
+      categoryWiseAppDetail;
+
+  List<ListAppsDetailModel> allApps;
+
+  var installedApps = [];
 
   @override
   void initState() {
@@ -54,7 +63,6 @@ class _AppsState extends State<Apps> with AutomaticKeepAliveClientMixin<Apps> {
       _empId = id;
       _userName = name;
       _employeeType = employeeType;
-      //_osType = "ANDROID";
     });
     var responseJson = await NetworkUtils.fetch(
         authToken,
@@ -66,23 +74,42 @@ class _AppsState extends State<Apps> with AutomaticKeepAliveClientMixin<Apps> {
 //    final Map parsed = json.decode(responseJson);
 
     //assuming this json returns an array of signupresponse objects
-    final List parsedList = json.decode(responseJson);
-
-    List<listAppsDetailModel> list =
-        parsedList.map((val) => listAppsDetailModel.fromJson(val)).toList();
-
-    if (responseJson == null) {
-      // NetworkUtils.showSnackBar(_scaffoldKey, 'Something went wrong!');
-    } else if (responseJson == 'NetworkError') {
-      //NetworkUtils.showSnackBar(_scaffoldKey, null);
-    } else if (responseJson['errors'] != null) {
-      _logout();
+    var categoryWiseAppDetail = List<ListCategoryWiseAppDetailModel>.of([]);
+    var appListResponse = AppListResponse.fromJson(responseJson);
+    if (appListResponse.response != null &&
+        appListResponse.response.isSuccess) {
+      categoryWiseAppDetail =
+          appListResponse.response.data.listCategoryWiseAppDetailModel;
     }
 
-    setState(() {
-      _homeResponse = responseJson.toString();
+    categoryWiseAppDetail.forEach((element) => {
+          if (element.aPPCATEGORYNAME == "All Apps")
+            {allApps = element.listAppsDetailModel}
+        });
 
-      print(_homeResponse);
+    Map<String, String> isAppAvailable;
+    var localInstalledApps = [];
+    for (var i = 0; i < allApps.length; i++) {
+      // ignore: unnecessary_statements
+      var app = allApps[i];
+      try {
+        isAppAvailable =
+            await AppAvailability.checkAvailability(app.aNDROIDPACKAGENAME);
+        var versionName = isAppAvailable["version_name"];
+        if (versionName != null) {
+          // installedApps.add(app);
+          localInstalledApps.add(app);
+        }
+      } catch (e) {
+        print(app.aPPNAME + "App not present");
+      }
+    }
+
+    print("installed apps length" + installedApps.length.toString());
+
+    setState(() {
+      categoryWiseAppDetail = categoryWiseAppDetail;
+      installedApps = localInstalledApps;
     });
   }
 

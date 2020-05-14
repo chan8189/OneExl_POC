@@ -88,11 +88,15 @@ class NetworkUtils {
     try {
       final response = await http.post(uri, headers: headers, body: msg);
 
-      final responseJson = json.decode(response.body);
-      print(response.body);
+      //  final responseJson = json.decode(response.body);
+//      print(response.body);
 
-      return responseJson;
+      //  final List parsedList = json.decode(response.body);
 
+//      List<listAppsDetailModel> list =
+//          parsedList.map((val) => listAppsDetailModel.fromJson(val)).toList();
+
+      return response.body;
     } catch (exception) {
       print(exception);
       if (exception.toString().contains('SocketException')) {
